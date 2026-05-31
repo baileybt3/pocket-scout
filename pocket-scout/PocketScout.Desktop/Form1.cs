@@ -29,12 +29,15 @@ namespace PocketScout.Desktop
                 lblCentering.Text = "Centering: Load an image first.";
                 return;            
             }
+            ImageAnalyzer analyzer = new Core.ImageAnalyzer();
+
+            var borders = analyzer.GetBorderWidths();
 
             CardGrader grader = new CardGrader();
 
-            string centering = grader.AnalyzeCentering();
+            CenteringResult result = grader.AnalyzeCentering(borders.left, borders.right);
 
-            lblCentering.Text = $"Centering: {centering}";
+            lblCentering.Text = $"Centering: {result}";
         }
     }
 }
