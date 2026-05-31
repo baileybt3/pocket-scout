@@ -1,0 +1,35 @@
+﻿@page "/grade"
+@rendermode InteractiveServer
+
+<h1>Grade Card</h1>
+
+<h2>Please insert card information:</h2>
+
+<label>Card Name</label>
+<input @bind="cardName" />
+ 
+<br/><br />
+
+<label>Set Name:</label>
+<input @bind="setName"/>
+
+<br /><br />
+
+<button @onclick="CardGrade">
+	Grade Card
+</button>
+
+<p>@result</p>
+
+@code {
+	private string cardName = "";
+	private string setName = "";
+	private string result = "";
+
+	private void CardGrade()
+	{
+		result = $"{cardName} from {setName} received a grade of 8.";
+	}
+
+
+}
