@@ -1,4 +1,5 @@
 using System.Windows.Forms;
+using PocketScout.Core;
 
 namespace PocketScout.Desktop
 {
@@ -21,5 +22,19 @@ namespace PocketScout.Desktop
             }
         }
 
+        private void btnAnalyze_Click(object sender, EventArgs e)
+        {
+            if(pictureBoxCard.Image == null)
+            {
+                lblCentering.Text = "Centering: Load an image first.";
+                return;            
+            }
+
+            CardGrader grader = new CardGrader();
+
+            string centering = grader.AnalyzeCentering();
+
+            lblCentering.Text = $"Centering: {centering}";
+        }
     }
 }

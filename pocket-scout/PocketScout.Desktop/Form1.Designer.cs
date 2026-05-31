@@ -30,6 +30,8 @@
         {
             btnLoadImage = new Button();
             pictureBoxCard = new PictureBox();
+            btnAnalyze = new Button();
+            lblCentering = new Label();
             ((System.ComponentModel.ISupportInitialize)pictureBoxCard).BeginInit();
             SuspendLayout();
             // 
@@ -53,22 +55,46 @@
             pictureBoxCard.TabIndex = 1;
             pictureBoxCard.TabStop = false;
             // 
+            // btnAnalyze
+            // 
+            btnAnalyze.Location = new Point(165, 12);
+            btnAnalyze.Name = "btnAnalyze";
+            btnAnalyze.Size = new Size(116, 71);
+            btnAnalyze.TabIndex = 2;
+            btnAnalyze.Text = "Analyze Card Centering";
+            btnAnalyze.UseVisualStyleBackColor = true;
+            btnAnalyze.Click += btnAnalyze_Click;
+            // 
+            // lblCentering
+            // 
+            lblCentering.AutoSize = true;
+            lblCentering.Location = new Point(300, 40);
+            lblCentering.Name = "lblCentering";
+            lblCentering.Size = new Size(32, 15);
+            lblCentering.TabIndex = 3;
+            lblCentering.Text = "label";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(lblCentering);
+            Controls.Add(btnAnalyze);
             Controls.Add(pictureBoxCard);
             Controls.Add(btnLoadImage);
             Name = "Form1";
             Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)pictureBoxCard).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
 
         private Button btnLoadImage;
         private PictureBox pictureBoxCard;
+        private Button btnAnalyze;
+        private Label lblCentering;
     }
 }
