@@ -70,9 +70,9 @@
             lblCentering.AutoSize = true;
             lblCentering.Location = new Point(300, 40);
             lblCentering.Name = "lblCentering";
-            lblCentering.Size = new Size(32, 15);
+            lblCentering.Size = new Size(72, 15);
             lblCentering.TabIndex = 3;
-            lblCentering.Text = "label";
+            lblCentering.Text = "lblCentering";
             // 
             // Form1
             // 

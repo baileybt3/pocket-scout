@@ -1,5 +1,5 @@
-using System.Windows.Forms;
 using PocketScout.Core;
+using System.Drawing;
 
 namespace PocketScout.Desktop
 {
@@ -10,34 +10,37 @@ namespace PocketScout.Desktop
             InitializeComponent();
         }
 
+
         private void btnLoadImage_Click(object sender, EventArgs e)
         {
-            using OpenFileDialog dialog = new OpenFileDialog();
+            OpenFileDialog dialog = new OpenFileDialog();
 
-            dialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp";
+            dialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp;*.gif";
 
-            if (dialog.ShowDialog() == DialogResult.OK)
+            if(dialog.ShowDialog() == DialogResult.OK)
             {
-                pictureBoxCard.Image = Image.FromFile(dialog.FileName);
+                Bitmap cardImage = new Bitmap(dialog.FileName);
+
+                pictureBoxCard.Image = cardImage;
             }
         }
 
         private void btnAnalyze_Click(object sender, EventArgs e)
         {
-            if(pictureBoxCard.Image == null)
+            if (pictureBoxCard.Image == null)
             {
                 lblCentering.Text = "Centering: Load an image first.";
-                return;            
+                return;
             }
-            ImageAnalyzer analyzer = new Core.ImageAnalyzer();
 
-            var borders = analyzer.GetBorderWidths();
+            Bitmap cardImage = new Bitmap(pictureBoxCard.Image);
 
-            CardGrader grader = new CardGrader();
+            ImageAnalyzer analyzer = new ImageAnalyzer();
 
-            CenteringResult result = grader.AnalyzeCentering(borders.left, borders.right);
+            var size = analyzer.GetImageSize(cardImage);
 
-            lblCentering.Text = $"Centering: {result}";
+            lblCentering.Text = $"Width: {size.width}, Height: {size.height}";
         }
+
     }
 }
