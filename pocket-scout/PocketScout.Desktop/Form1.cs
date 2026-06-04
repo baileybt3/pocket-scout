@@ -28,7 +28,7 @@ namespace PocketScout.Desktop
         {
             if (pictureBoxCard.Image == null)
             {
-                lblCentering.Text = "Centering: Load an image first.";
+                lblResolution.Text = "Centering: Load an image first.";
                 return;
             }
 
@@ -40,7 +40,7 @@ namespace PocketScout.Desktop
 
             var border = analyzer.GetCardBorder(cardImage);
 
-            lblCentering.Text = $"Width: {size.width}, Height: {size.height}";
+            lblResolution.Text = $"Resolution: {size.width}x{size.height}";
 
             lblBorders.Text = $"Left Border: {border.leftBorder}\nRight: {border.rightBorder}";
         }

@@ -31,7 +31,7 @@
             btnLoadImage = new Button();
             pictureBoxCard = new PictureBox();
             btnAnalyze = new Button();
-            lblCentering = new Label();
+            lblResolution = new Label();
             lblBorders = new Label();
             ((System.ComponentModel.ISupportInitialize)pictureBoxCard).BeginInit();
             SuspendLayout();
@@ -66,14 +66,14 @@
             btnAnalyze.UseVisualStyleBackColor = true;
             btnAnalyze.Click += btnAnalyze_Click;
             // 
-            // lblCentering
+            // lblResolution
             // 
-            lblCentering.AutoSize = true;
-            lblCentering.Location = new Point(300, 40);
-            lblCentering.Name = "lblCentering";
-            lblCentering.Size = new Size(72, 15);
-            lblCentering.TabIndex = 3;
-            lblCentering.Text = "lblCentering";
+            lblResolution.AutoSize = true;
+            lblResolution.Location = new Point(300, 40);
+            lblResolution.Name = "lblResolution";
+            lblResolution.Size = new Size(76, 15);
+            lblResolution.TabIndex = 3;
+            lblResolution.Text = "lblResolution";
             // 
             // lblBorders
             // 
@@ -90,7 +90,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
             Controls.Add(lblBorders);
-            Controls.Add(lblCentering);
+            Controls.Add(lblResolution);
             Controls.Add(btnAnalyze);
             Controls.Add(pictureBoxCard);
             Controls.Add(btnLoadImage);
@@ -106,7 +106,7 @@
         private Button btnLoadImage;
         private PictureBox pictureBoxCard;
         private Button btnAnalyze;
-        private Label lblCentering;
+        private Label lblResolution;
         private Label lblBorders;
     }
 }
