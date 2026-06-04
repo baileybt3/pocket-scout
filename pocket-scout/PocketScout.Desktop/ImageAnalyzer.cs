@@ -66,6 +66,24 @@ namespace PocketScout.Desktop
 
             return total / amount;
         }
+
+        // Draw Debug Border Lines
+        public Bitmap DrawBorderLines(Bitmap image, int leftBorder, int rightBorder)
+        {
+            Bitmap copy = new Bitmap(image);
+
+            using (Graphics g = Graphics.FromImage(copy))
+            using (Pen pen = new Pen(Color.Red, 3))
+            {
+                int leftX = leftBorder;
+                int rightX = image.Width - rightBorder;
+
+                g.DrawLine(pen, leftX, 0, leftX, image.Height);
+                g.DrawLine(pen, rightX, 0, rightX, image.Height);
+            }
+
+            return copy;
+        }
             
     }
 }

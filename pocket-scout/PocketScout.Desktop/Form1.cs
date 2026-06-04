@@ -38,9 +38,13 @@ namespace PocketScout.Desktop
 
             var size = analyzer.GetImageSize(cardImage);
 
+            lblResolution.Text = $"Resolution: {size.width}x{size.height}";
+
             var border = analyzer.GetCardBorder(cardImage);
 
-            lblResolution.Text = $"Resolution: {size.width}x{size.height}";
+            // Draw border lines on image and display
+            pictureBoxCard.Image = analyzer.DrawBorderLines(cardImage, border.leftBorder, border.rightBorder);
+            
 
             lblBorders.Text = $"Left Border: {border.leftBorder}\nRight: {border.rightBorder}";
         }
