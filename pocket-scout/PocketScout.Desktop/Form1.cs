@@ -1,4 +1,3 @@
-using PocketScout.Core;
 using System.Drawing;
 
 namespace PocketScout.Desktop
@@ -39,7 +38,11 @@ namespace PocketScout.Desktop
 
             var size = analyzer.GetImageSize(cardImage);
 
+            var border = analyzer.GetCardBorder(cardImage);
+
             lblCentering.Text = $"Width: {size.width}, Height: {size.height}";
+
+            lblBorders.Text = $"Left Border: {border.leftBorder}\nRight: {border.rightBorder}";
         }
 
     }

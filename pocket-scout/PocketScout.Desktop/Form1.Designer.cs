@@ -32,6 +32,7 @@
             pictureBoxCard = new PictureBox();
             btnAnalyze = new Button();
             lblCentering = new Label();
+            lblBorders = new Label();
             ((System.ComponentModel.ISupportInitialize)pictureBoxCard).BeginInit();
             SuspendLayout();
             // 
@@ -74,11 +75,21 @@
             lblCentering.TabIndex = 3;
             lblCentering.Text = "lblCentering";
             // 
+            // lblBorders
+            // 
+            lblBorders.AutoSize = true;
+            lblBorders.Location = new Point(478, 40);
+            lblBorders.Name = "lblBorders";
+            lblBorders.Size = new Size(60, 15);
+            lblBorders.TabIndex = 4;
+            lblBorders.Text = "lblBorders";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(lblBorders);
             Controls.Add(lblCentering);
             Controls.Add(btnAnalyze);
             Controls.Add(pictureBoxCard);
@@ -96,5 +107,6 @@
         private PictureBox pictureBoxCard;
         private Button btnAnalyze;
         private Label lblCentering;
+        private Label lblBorders;
     }
 }
