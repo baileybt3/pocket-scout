@@ -18,7 +18,7 @@ namespace PocketScout.Desktop
             int leftBorder = 0;
             int rightBorder = 0;
 
-            int threshold = 40; // Adjust threshold base on card's background color
+            int threshold = 120; // Adjust threshold base on card's background color
 
             for (int x = 5; x < image.Width - 5; x++)
             {
