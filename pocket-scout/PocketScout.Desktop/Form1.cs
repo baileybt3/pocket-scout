@@ -16,7 +16,7 @@ namespace PocketScout.Desktop
 
             dialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp;*.gif";
 
-            if(dialog.ShowDialog() == DialogResult.OK)
+            if (dialog.ShowDialog() == DialogResult.OK)
             {
                 Bitmap cardImage = new Bitmap(dialog.FileName);
 
@@ -43,11 +43,15 @@ namespace PocketScout.Desktop
             var border = analyzer.GetCardBorder(cardImage);
 
             // Draw border lines on image and display
-            pictureBoxCard.Image = analyzer.DrawBorderLines(cardImage, border.leftBorder, border.rightBorder);
-            
+            pictureBoxCard.Image = analyzer.DrawBorderLines(cardImage, border.leftBorder, border.rightBorder, border.topBorder, border.bottomBorder);
+
 
             lblBorders.Text = $"Left Border: {border.leftBorder}\nRight: {border.rightBorder}";
         }
 
+        private void pictureBoxCard_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

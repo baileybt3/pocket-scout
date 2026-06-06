@@ -55,6 +55,7 @@
             pictureBoxCard.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBoxCard.TabIndex = 1;
             pictureBoxCard.TabStop = false;
+            pictureBoxCard.Click += pictureBoxCard_Click;
             // 
             // btnAnalyze
             // 
