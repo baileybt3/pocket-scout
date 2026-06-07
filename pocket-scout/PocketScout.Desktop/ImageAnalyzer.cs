@@ -87,13 +87,13 @@ namespace PocketScout.Desktop
         }
 
         // Avg Brightness Horizontal Helper Method
-        private int GetAverageBrightnessHorizontal(Bitmap image, int startX, int y, int amount)
+        private int GetAverageBrightnessHorizontal(Bitmap image, int startX, int fixedY, int amount)
         {
             int total = 0;
 
             for (int x = startX; x < startX + amount; x++){
 
-                Color pixel = image.GetPixel(x, y);
+                Color pixel = image.GetPixel(x, fixedY);
                 total += (pixel.R + pixel.G + pixel.B) / 3;
             }
 
@@ -101,13 +101,13 @@ namespace PocketScout.Desktop
         }
 
         // Avg Brightness Veritcal Helper Method
-        private int GetAverageBrightnessVertical(Bitmap image, int startY, int x, int amount)
+        private int GetAverageBrightnessVertical(Bitmap image, int startY, int fixedX, int amount)
         {
             int total = 0;
 
             for(int y = startY; y < startY + amount; y++)
             {
-                Color pixel = image.GetPixel(x, y);
+                Color pixel = image.GetPixel(fixedX, y);
                 total += (pixel.R + pixel.G + pixel.B) / 3;
 
             }
