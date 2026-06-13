@@ -33,6 +33,7 @@
             btnAnalyze = new Button();
             lblResolution = new Label();
             lblBorders = new Label();
+            lblLoadStatus = new Label();
             ((System.ComponentModel.ISupportInitialize)pictureBoxCard).BeginInit();
             SuspendLayout();
             // 
@@ -75,6 +76,7 @@
             lblResolution.Size = new Size(76, 15);
             lblResolution.TabIndex = 3;
             lblResolution.Text = "lblResolution";
+            lblResolution.Visible = false;
             // 
             // lblBorders
             // 
@@ -84,12 +86,24 @@
             lblBorders.Size = new Size(60, 15);
             lblBorders.TabIndex = 4;
             lblBorders.Text = "lblBorders";
+            lblBorders.Visible = false;
+            // 
+            // lblLoadStatus
+            // 
+            lblLoadStatus.AutoSize = true;
+            lblLoadStatus.Location = new Point(31, 429);
+            lblLoadStatus.Name = "lblLoadStatus";
+            lblLoadStatus.Size = new Size(78, 15);
+            lblLoadStatus.TabIndex = 5;
+            lblLoadStatus.Text = "lblLoadStatus";
+            lblLoadStatus.Visible = false;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(lblLoadStatus);
             Controls.Add(lblBorders);
             Controls.Add(lblResolution);
             Controls.Add(btnAnalyze);
@@ -109,5 +123,6 @@
         private Button btnAnalyze;
         private Label lblResolution;
         private Label lblBorders;
+        private Label lblLoadStatus;
     }
 }

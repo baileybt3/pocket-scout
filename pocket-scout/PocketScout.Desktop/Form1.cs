@@ -21,6 +21,14 @@ namespace PocketScout.Desktop
                 Bitmap cardImage = new Bitmap(dialog.FileName);
 
                 pictureBoxCard.Image = cardImage;
+
+                lblLoadStatus.Visible = true;
+                lblLoadStatus.Text = "Card Successfully Loaded!";
+            }
+            else
+            {
+                lblLoadStatus.Visible = true;
+                lblLoadStatus.Text = "Card Not Loaded.";
             }
         }
 
@@ -38,6 +46,7 @@ namespace PocketScout.Desktop
 
             var size = analyzer.GetImageSize(cardImage);
 
+            lblResolution.Visible = true;
             lblResolution.Text = $"Resolution: {size.width}x{size.height}";
 
             var border = analyzer.GetCardBorder(cardImage);
@@ -45,7 +54,7 @@ namespace PocketScout.Desktop
             // Draw border lines on image and display
             pictureBoxCard.Image = analyzer.DrawBorderLines(cardImage, border.leftBorder, border.rightBorder, border.topBorder, border.bottomBorder);
 
-
+            lblBorders.Visible = true;
             lblBorders.Text = $"Left Border: {border.leftBorder}\nRight: {border.rightBorder}";
         }
 
@@ -53,5 +62,6 @@ namespace PocketScout.Desktop
         {
 
         }
+
     }
 }
