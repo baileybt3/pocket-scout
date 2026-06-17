@@ -10,7 +10,7 @@ namespace PocketScout.Desktop
         }
 
 
-        private void btnLoadImage_Click(object sender, EventArgs e)
+        public void btnLoadImage_Click(object sender, EventArgs e)
         {
             OpenFileDialog dialog = new OpenFileDialog();
 
@@ -51,8 +51,23 @@ namespace PocketScout.Desktop
 
             var border = analyzer.GetCardBorder(cardImage);
 
+            var innerBorder = analyzer.GetCardInnerBorder(cardImage,
+                border.leftBorder,
+                border.rightBorder,
+                border.topBorder,
+                border.bottomBorder);
+
             // Draw border lines on image and display
-            pictureBoxCard.Image = analyzer.DrawBorderLines(cardImage, border.leftBorder, border.rightBorder, border.topBorder, border.bottomBorder);
+            pictureBoxCard.Image = analyzer.DrawBorderLines(
+                cardImage,
+                border.leftBorder,
+                border.rightBorder,
+                border.topBorder,
+                border.bottomBorder,
+                innerBorder.leftInnerBorder,
+                innerBorder.rightInnerBorder,
+                innerBorder.topInnerBorder,
+                innerBorder.bottomInnerBorder);
 
             lblBorders.Visible = true;
             lblBorders.Text = $"Left Border: {border.leftBorder}\nRight: {border.rightBorder}";

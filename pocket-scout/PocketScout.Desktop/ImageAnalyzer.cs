@@ -4,11 +4,14 @@ namespace PocketScout.Desktop
 {
     public class ImageAnalyzer
     {
+
+        // Image Size
         public (int width, int height) GetImageSize(Bitmap image)
         {
             return (image.Width, image.Height);
         }
 
+        // Card Outside Border
         public (int leftBorder, int rightBorder, int topBorder, int bottomBorder) GetCardBorder(Bitmap image)
         {
             // Get to middle row of image (temporary)
@@ -86,6 +89,82 @@ namespace PocketScout.Desktop
             return (leftBorder, rightBorder, topBorder, bottomBorder);
         }
 
+        public (int topInnerBorder, int rightInnerBorder, int leftInnerBorder, int bottomInnerBorder) GetCardInnerBorder(Bitmap image, int leftBorder, int rightBorder, int topBorder, int bottomBorder)
+        {
+            int middleX = image.Width / 2;
+            int middleY = image.Height / 2;
+
+            int topInnerBorder = 0;
+            int rightInnerBorder = 0;
+            int leftInnerBorder = 0;
+            int bottomInnerBorder = 0;
+
+            int threshold = 120;
+
+            // Get left inner border
+            for (int x = leftBorder + 20; x < image.Width - rightBorder - 5; x++)
+            {
+                int previousAverage = GetAverageBrightnessHorizontal(image, x - 5, middleY, 5);
+                int nextAverage = GetAverageBrightnessHorizontal(image, x, middleY, 5);
+
+                int difference = Math.Abs(previousAverage - nextAverage);
+
+                if (difference > threshold)
+                {
+                    leftInnerBorder = x;
+                    break;
+                }
+            }
+
+            // Get right inner border
+            for (int x = image.Width - rightBorder - 20; x > leftBorder + 5; x--)
+            {
+                int previousAverage = GetAverageBrightnessHorizontal(image, x, middleY, 5);
+                int nextAverage = GetAverageBrightnessHorizontal(image, x - 5, middleY, 5);
+
+                int difference = Math.Abs(previousAverage - nextAverage);
+
+                if (difference > threshold)
+                {
+                    rightInnerBorder = image.Width - x;
+                    break;
+                }
+            }
+
+            // Get top inner border
+            for (int y = topBorder + 20; y < image.Height - bottomBorder - 5; y++)
+            {
+                int previousAverage = GetAverageBrightnessVertical(image, y - 5, middleX, 5);
+                int nextAverage = GetAverageBrightnessVertical(image, y, middleX, 5);
+
+                int difference = Math.Abs(previousAverage - nextAverage);
+
+                if (difference > threshold)
+                {
+                    topInnerBorder = y;
+                    break;
+                }
+            }
+
+            // Get bottom inner border
+            for (int y = image.Height - bottomBorder - 20; y > topBorder + 5 ; y--)
+            {
+                int previousAverage = GetAverageBrightnessVertical(image, y - 5, middleX, 5);
+                int nextAverage = GetAverageBrightnessVertical(image, y, middleX, 5);
+
+                int difference = Math.Abs(previousAverage - nextAverage);
+
+                if (difference > threshold)
+                {
+                    bottomInnerBorder = image.Height - y;
+                    break;
+                }
+            }
+
+
+            return (topInnerBorder, rightInnerBorder, leftInnerBorder, bottomInnerBorder);
+        }
+
         // Avg Brightness Horizontal Helper Method
         private int GetAverageBrightnessHorizontal(Bitmap image, int startX, int fixedY, int amount)
         {
@@ -115,22 +194,43 @@ namespace PocketScout.Desktop
         }
 
         // Draw Debug Border Lines
-        public Bitmap DrawBorderLines(Bitmap image, int leftBorder, int rightBorder, int topBorder, int bottomBorder)
+        public Bitmap DrawBorderLines(Bitmap image, int leftBorder, int rightBorder, int topBorder, int bottomBorder, int leftInnerBorder, int rightInnerBorder, int topInnerBorder, int bottomInnerBorder)
         {
             Bitmap copy = new Bitmap(image);
 
             using (Graphics g = Graphics.FromImage(copy))
             using (Pen pen = new Pen(Color.Red, 3))
             {
+                // Outer Borders
                 int leftX = leftBorder;
                 int rightX = image.Width - rightBorder;
                 int topY = topBorder;
                 int bottomY = image.Height - bottomBorder;
 
-                g.DrawLine(pen, leftX, 0, leftX, image.Height);
-                g.DrawLine(pen, rightX, 0, rightX, image.Height);
-                g.DrawLine(pen, 0, topY, image.Width, topY);
-                g.DrawLine(pen, 0, bottomY, image.Width, bottomY);
+                // Inner Borders
+                int leftInnerX = leftInnerBorder;
+                int rightInnerX = image.Width - rightInnerBorder;
+                int topInnerY = topInnerBorder;
+                int bottomInnerY = image.Height - bottomInnerBorder;
+
+                // Draw Outer Borders
+                using (Pen outerPen = new Pen(Color.Red, 3)) 
+                {
+                    g.DrawLine(outerPen, leftX, 0, leftX, image.Height);
+                    g.DrawLine(outerPen, rightX, 0, rightX, image.Height);
+                    g.DrawLine(outerPen, 0, topY, image.Width, topY);
+                    g.DrawLine(outerPen, 0, bottomY, image.Width, bottomY);
+                }
+                
+                // Draw Inner Borders
+                using (Pen innerPen = new Pen(Color.Blue, 3))
+                {
+                    g.DrawLine(innerPen, leftInnerX, 0, leftInnerX, image.Height);
+                    g.DrawLine(innerPen, rightInnerX, 0, rightInnerX, image.Height);
+                    g.DrawLine(innerPen, 0, topInnerY, image.Width, topInnerY);
+                    g.DrawLine(innerPen, 0, bottomInnerY, image.Width, bottomInnerY);
+                }
+                
 
             }
 
