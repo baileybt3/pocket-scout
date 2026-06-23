@@ -57,6 +57,10 @@ namespace PocketScout.Desktop
                 border.topBorder,
                 border.bottomBorder);
 
+            CardGrader grader = new CardGrader();
+
+            CenteringResult centering = grader.CalculateCentering(cardImage, border, innerBorder);
+
             // Draw border lines on image and display
             pictureBoxCard.Image = analyzer.DrawBorderLines(
                 cardImage,
@@ -70,7 +74,12 @@ namespace PocketScout.Desktop
                 innerBorder.bottomInnerBorder);
 
             lblBorders.Visible = true;
-            lblBorders.Text = $"Left Border: {border.leftBorder}\nRight: {border.rightBorder}";
+            lblBorders.Text = $"Outer Left: {border.leftBorder}\n" +
+                              $"Outer Right: {border.rightBorder}\n" +
+                              $"Left Card Border: {centering.LeftBorderSize}px\n" +
+                              $"Right Card Border: {centering.RightBorderSize}px\n" +
+                              $"Left/Right Centering: {centering.LeftPercent:F1}/{centering.RightPercent:F1}\n" +
+                              $"Top/Bottom Centering: {centering.TopPercent:F1}/{centering.BottomPercent:F1}";
         }
 
         private void pictureBoxCard_Click(object sender, EventArgs e)

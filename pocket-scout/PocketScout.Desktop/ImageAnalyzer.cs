@@ -89,7 +89,7 @@ namespace PocketScout.Desktop
             return (leftBorder, rightBorder, topBorder, bottomBorder);
         }
 
-        public (int topInnerBorder, int rightInnerBorder, int leftInnerBorder, int bottomInnerBorder) GetCardInnerBorder(Bitmap image, int leftBorder, int rightBorder, int topBorder, int bottomBorder)
+        public (int leftInnerBorder, int rightInnerBorder, int topInnerBorder, int bottomInnerBorder) GetCardInnerBorder(Bitmap image, int leftBorder, int rightBorder, int topBorder, int bottomBorder)
         {
             int middleX = image.Width / 2;
             int middleY = image.Height / 2;
