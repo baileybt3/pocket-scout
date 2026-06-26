@@ -4,11 +4,11 @@ namespace PocketScout.Desktop
 {
     public partial class Form1 : Form
     {
+        private Bitmap? originalCardImage;
         public Form1()
         {
             InitializeComponent();
         }
-
 
         public void btnLoadImage_Click(object sender, EventArgs e)
         {
@@ -18,9 +18,9 @@ namespace PocketScout.Desktop
 
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-                Bitmap cardImage = new Bitmap(dialog.FileName);
+                originalCardImage = new Bitmap(dialog.FileName);
 
-                pictureBoxCard.Image = cardImage;
+                pictureBoxCard.Image = new Bitmap(originalCardImage);
 
                 lblLoadStatus.Visible = true;
                 lblLoadStatus.Text = "Card Successfully Loaded!";
@@ -34,13 +34,13 @@ namespace PocketScout.Desktop
 
         private void btnAnalyze_Click(object sender, EventArgs e)
         {
-            if (pictureBoxCard.Image == null)
+            if (originalCardImage == null)
             {
                 lblResolution.Text = "Centering: Load an image first.";
                 return;
             }
 
-            Bitmap cardImage = new Bitmap(pictureBoxCard.Image);
+            Bitmap cardImage = new Bitmap(originalCardImage);
 
             ImageAnalyzer analyzer = new ImageAnalyzer();
 
@@ -78,6 +78,9 @@ namespace PocketScout.Desktop
                               $"Outer Right: {border.rightBorder}\n" +
                               $"Left Card Border: {centering.LeftBorderSize}px\n" +
                               $"Right Card Border: {centering.RightBorderSize}px\n" +
+                              $"Top Card Border: {centering.TopBorderSize}px\n"+
+                              $"Bottom Card Border: {centering.BottomBorderSize}px\n"+
+
                               $"Left/Right Centering: {centering.LeftPercent:F1}/{centering.RightPercent:F1}\n" +
                               $"Top/Bottom Centering: {centering.TopPercent:F1}/{centering.BottomPercent:F1}";
         }
