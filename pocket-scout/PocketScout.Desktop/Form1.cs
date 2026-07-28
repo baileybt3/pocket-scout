@@ -42,6 +42,9 @@ namespace PocketScout.Desktop
 
             ImageAnalyzer analyzer = new ImageAnalyzer();
 
+            zoom = 1.0f;
+            UpdatePictureBoxSize();
+
             var size = analyzer.GetImageSize(cardImage);
 
             lblResolution.Visible = true;
@@ -70,6 +73,8 @@ namespace PocketScout.Desktop
                 innerBorder.rightInnerBorder,
                 innerBorder.topInnerBorder,
                 innerBorder.bottomInnerBorder);
+
+            UpdatePictureBoxSize();
 
             lblBorders.Visible = true;
             lblBorders.Text = $"Outer Left: {border.leftBorder}\n" +

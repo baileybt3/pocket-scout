@@ -167,7 +167,7 @@ namespace PocketScout.Desktop
             }
 
 
-            return (topInnerBorder, rightInnerBorder, leftInnerBorder, bottomInnerBorder);
+            return (leftInnerBorder, rightInnerBorder, topInnerBorder, bottomInnerBorder);
         }
 
         // Avg Brightness Horizontal Helper Method

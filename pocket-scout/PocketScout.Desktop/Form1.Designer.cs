@@ -52,9 +52,9 @@
             // pictureBoxCard
             // 
             pictureBoxCard.BorderStyle = BorderStyle.FixedSingle;
-            pictureBoxCard.Location = new Point(0, 3);
+            pictureBoxCard.Location = new Point(0, 0);
             pictureBoxCard.Name = "pictureBoxCard";
-            pictureBoxCard.Size = new Size(770, 315);
+            pictureBoxCard.Size = new Size(776, 402);
             pictureBoxCard.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBoxCard.TabIndex = 1;
             pictureBoxCard.TabStop = false;
@@ -93,9 +93,9 @@
             // lblLoadStatus
             // 
             lblLoadStatus.AutoSize = true;
-            lblLoadStatus.Location = new Point(12, 429);
+            lblLoadStatus.Location = new Point(12, 630);
             lblLoadStatus.Name = "lblLoadStatus";
-            lblLoadStatus.Size = new Size(120, 48);
+            lblLoadStatus.Size = new Size(78, 15);
             lblLoadStatus.TabIndex = 5;
             lblLoadStatus.Text = "lblLoadStatus";
             lblLoadStatus.Visible = false;
@@ -105,9 +105,9 @@
             // 
             panel1.AutoScroll = true;
             panel1.Controls.Add(pictureBoxCard);
-            panel1.Location = new Point(12, 157);
+            panel1.Location = new Point(12, 204);
             panel1.Name = "panel1";
-            panel1.Size = new Size(776, 247);
+            panel1.Size = new Size(776, 402);
             panel1.TabIndex = 6;
             // 
             // Form1
