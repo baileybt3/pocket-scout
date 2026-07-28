@@ -5,10 +5,8 @@ namespace PocketScout.Desktop
     public partial class Form1 : Form
     {
         private Bitmap? originalCardImage;
-        public Form1()
-        {
-            InitializeComponent();
-        }
+
+        private float zoom = 1.0f;
 
         public void btnLoadImage_Click(object sender, EventArgs e)
         {
@@ -78,8 +76,8 @@ namespace PocketScout.Desktop
                               $"Outer Right: {border.rightBorder}\n" +
                               $"Left Card Border: {centering.LeftBorderSize}px\n" +
                               $"Right Card Border: {centering.RightBorderSize}px\n" +
-                              $"Top Card Border: {centering.TopBorderSize}px\n"+
-                              $"Bottom Card Border: {centering.BottomBorderSize}px\n"+
+                              $"Top Card Border: {centering.TopBorderSize}px\n" +
+                              $"Bottom Card Border: {centering.BottomBorderSize}px\n" +
 
                               $"Left/Right Centering: {centering.LeftPercent:F1}/{centering.RightPercent:F1}\n" +
                               $"Top/Bottom Centering: {centering.TopPercent:F1}/{centering.BottomPercent:F1}";
@@ -90,5 +88,58 @@ namespace PocketScout.Desktop
 
         }
 
+        // --- QOL ---
+
+        // Mouse Zoom
+        private void pictureBoxCard_MouseWheel(object sender, MouseEventArgs e)
+        {
+            if(pictureBoxCard.Image == null)
+            {
+                return;
+            }
+
+            if (e.Delta > 0)
+            {
+                zoom *= 1.1f; // Zoom in
+            }
+            else
+            {
+                zoom /= 1.1f; // Zoom out
+            }
+
+            UpdatePictureBoxSize();
+        }
+
+        private void UpdatePictureBoxSize()
+        {
+            if(pictureBoxCard.Image == null)
+            {
+                return;
+            }
+
+            int width = (int)(pictureBoxCard.Image.Width * zoom);
+            int height = (int)(pictureBoxCard.Image.Height * zoom);
+
+            pictureBoxCard.Size = new Size(width, height);
+        }
+
+        private void pictureBoxCard_MouseEnter(object? sender, EventArgs e)
+        {
+            pictureBoxCard.Focus();
+        }
+
+
+        public Form1()
+        {
+            InitializeComponent();
+
+            pictureBoxCard.MouseWheel += pictureBoxCard_MouseWheel;
+            pictureBoxCard.MouseEnter += pictureBoxCard_MouseEnter;
+        }
+
+        private void lblLoadStatus_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

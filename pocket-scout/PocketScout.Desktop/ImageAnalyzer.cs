@@ -1,4 +1,9 @@
 ﻿using System.Drawing;
+/*
+ * Pocket Scout: Card Grading
+ * Brandon B
+ * 07/27/2026
+ */
 
 namespace PocketScout.Desktop
 {
@@ -99,7 +104,7 @@ namespace PocketScout.Desktop
             int leftInnerBorder = 0;
             int bottomInnerBorder = 0;
 
-            int threshold = 120;
+            int threshold = 128;
 
             // Get left inner border
             for (int x = leftBorder + 20; x < image.Width - rightBorder - 5; x++)

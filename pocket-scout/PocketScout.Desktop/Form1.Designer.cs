@@ -34,7 +34,9 @@
             lblResolution = new Label();
             lblBorders = new Label();
             lblLoadStatus = new Label();
+            panel1 = new Panel();
             ((System.ComponentModel.ISupportInitialize)pictureBoxCard).BeginInit();
+            panel1.SuspendLayout();
             SuspendLayout();
             // 
             // btnLoadImage
@@ -50,10 +52,10 @@
             // pictureBoxCard
             // 
             pictureBoxCard.BorderStyle = BorderStyle.FixedSingle;
-            pictureBoxCard.Location = new Point(31, 112);
+            pictureBoxCard.Location = new Point(0, 3);
             pictureBoxCard.Name = "pictureBoxCard";
-            pictureBoxCard.Size = new Size(671, 314);
-            pictureBoxCard.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBoxCard.Size = new Size(770, 315);
+            pictureBoxCard.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBoxCard.TabIndex = 1;
             pictureBoxCard.TabStop = false;
             pictureBoxCard.Click += pictureBoxCard_Click;
@@ -91,27 +93,38 @@
             // lblLoadStatus
             // 
             lblLoadStatus.AutoSize = true;
-            lblLoadStatus.Location = new Point(31, 429);
+            lblLoadStatus.Location = new Point(12, 429);
             lblLoadStatus.Name = "lblLoadStatus";
-            lblLoadStatus.Size = new Size(78, 15);
+            lblLoadStatus.Size = new Size(120, 48);
             lblLoadStatus.TabIndex = 5;
             lblLoadStatus.Text = "lblLoadStatus";
             lblLoadStatus.Visible = false;
+            lblLoadStatus.Click += lblLoadStatus_Click;
+            // 
+            // panel1
+            // 
+            panel1.AutoScroll = true;
+            panel1.Controls.Add(pictureBoxCard);
+            panel1.Location = new Point(12, 157);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(776, 247);
+            panel1.TabIndex = 6;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(800, 654);
+            Controls.Add(panel1);
             Controls.Add(lblLoadStatus);
             Controls.Add(lblBorders);
             Controls.Add(lblResolution);
             Controls.Add(btnAnalyze);
-            Controls.Add(pictureBoxCard);
             Controls.Add(btnLoadImage);
             Name = "Form1";
             Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)pictureBoxCard).EndInit();
+            panel1.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -124,5 +137,6 @@
         private Label lblResolution;
         private Label lblBorders;
         private Label lblLoadStatus;
+        private Panel panel1;
     }
 }
