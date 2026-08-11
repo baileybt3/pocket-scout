@@ -34,14 +34,16 @@
             lblResolution = new Label();
             lblBorders = new Label();
             lblLoadStatus = new Label();
-            panel1 = new Panel();
+            pictureBoxPanel = new Panel();
+            headersPanel = new Panel();
             ((System.ComponentModel.ISupportInitialize)pictureBoxCard).BeginInit();
-            panel1.SuspendLayout();
+            pictureBoxPanel.SuspendLayout();
+            headersPanel.SuspendLayout();
             SuspendLayout();
             // 
             // btnLoadImage
             // 
-            btnLoadImage.Location = new Point(12, 12);
+            btnLoadImage.Location = new Point(3, 9);
             btnLoadImage.Name = "btnLoadImage";
             btnLoadImage.Size = new Size(120, 71);
             btnLoadImage.TabIndex = 0;
@@ -51,18 +53,19 @@
             // 
             // pictureBoxCard
             // 
+            pictureBoxCard.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             pictureBoxCard.BorderStyle = BorderStyle.FixedSingle;
             pictureBoxCard.Location = new Point(0, 0);
             pictureBoxCard.Name = "pictureBoxCard";
             pictureBoxCard.Size = new Size(776, 402);
-            pictureBoxCard.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBoxCard.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBoxCard.TabIndex = 1;
             pictureBoxCard.TabStop = false;
             pictureBoxCard.Click += pictureBoxCard_Click;
             // 
             // btnAnalyze
             // 
-            btnAnalyze.Location = new Point(165, 12);
+            btnAnalyze.Location = new Point(129, 9);
             btnAnalyze.Name = "btnAnalyze";
             btnAnalyze.Size = new Size(116, 71);
             btnAnalyze.TabIndex = 2;
@@ -73,7 +76,7 @@
             // lblResolution
             // 
             lblResolution.AutoSize = true;
-            lblResolution.Location = new Point(300, 40);
+            lblResolution.Location = new Point(267, 37);
             lblResolution.Name = "lblResolution";
             lblResolution.Size = new Size(76, 15);
             lblResolution.TabIndex = 3;
@@ -83,7 +86,7 @@
             // lblBorders
             // 
             lblBorders.AutoSize = true;
-            lblBorders.Location = new Point(478, 40);
+            lblBorders.Location = new Point(426, 37);
             lblBorders.Name = "lblBorders";
             lblBorders.Size = new Size(60, 15);
             lblBorders.TabIndex = 4;
@@ -100,31 +103,42 @@
             lblLoadStatus.Text = "lblLoadStatus";
             lblLoadStatus.Visible = false;
             lblLoadStatus.Click += lblLoadStatus_Click;
+            lblLoadStatus.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             // 
-            // panel1
+            // pictureBoxPanel
             // 
-            panel1.AutoScroll = true;
-            panel1.Controls.Add(pictureBoxCard);
-            panel1.Location = new Point(12, 204);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(776, 402);
-            panel1.TabIndex = 6;
+            pictureBoxPanel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            pictureBoxPanel.Controls.Add(pictureBoxCard);
+            pictureBoxPanel.Location = new Point(12, 204);
+            pictureBoxPanel.Name = "pictureBoxPanel";
+            pictureBoxPanel.Size = new Size(776, 402);
+            pictureBoxPanel.TabIndex = 6;
+            // 
+            // headersPanel
+            // 
+            headersPanel.Controls.Add(btnLoadImage);
+            headersPanel.Controls.Add(btnAnalyze);
+            headersPanel.Controls.Add(lblResolution);
+            headersPanel.Controls.Add(lblBorders);
+            headersPanel.Location = new Point(12, 12);
+            headersPanel.Name = "headersPanel";
+            headersPanel.Size = new Size(776, 186);
+            headersPanel.TabIndex = 7;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 654);
-            Controls.Add(panel1);
+            Controls.Add(headersPanel);
+            Controls.Add(pictureBoxPanel);
             Controls.Add(lblLoadStatus);
-            Controls.Add(lblBorders);
-            Controls.Add(lblResolution);
-            Controls.Add(btnAnalyze);
-            Controls.Add(btnLoadImage);
             Name = "Form1";
             Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)pictureBoxCard).EndInit();
-            panel1.ResumeLayout(false);
+            pictureBoxPanel.ResumeLayout(false);
+            headersPanel.ResumeLayout(false);
+            headersPanel.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -137,6 +151,7 @@
         private Label lblResolution;
         private Label lblBorders;
         private Label lblLoadStatus;
-        private Panel panel1;
+        private Panel pictureBoxPanel;
+        private Panel headersPanel;
     }
 }

@@ -198,6 +198,16 @@ namespace PocketScout.Desktop
             return total / amount;
         }
 
+
+        private int FindTopInnerBorderLinesAtX(Bitmap image, int x, int topBorder, int bottomBorder, int threshold)
+        {
+            for (int y = topBorder + 20; y < image.Height - bottomBorder - 5; y++)
+            {
+
+            }
+            return 0;
+        }
+
         // Draw Debug Border Lines
         public Bitmap DrawBorderLines(Bitmap image, int leftBorder, int rightBorder, int topBorder, int bottomBorder, int leftInnerBorder, int rightInnerBorder, int topInnerBorder, int bottomInnerBorder)
         {
