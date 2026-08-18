@@ -29,7 +29,7 @@ namespace PocketScout.Desktop
             int topBorder = 0;
             int bottomBorder = 0;
 
-            int threshold = 120; // Adjust threshold base on card's background color
+            int threshold = 140; // Adjust threshold base on card's background color
 
             // Get left border
             for (int x = 5; x < image.Width - 5; x++)
@@ -104,10 +104,10 @@ namespace PocketScout.Desktop
             int leftInnerBorder = 0;
             int bottomInnerBorder = 0;
 
-            int threshold = 128;
+            int threshold = 40;
 
             // Get left inner border
-            for (int x = leftBorder + 20; x < image.Width - rightBorder - 5; x++)
+            for (int x = leftBorder + 5; x < image.Width - rightBorder - 5; x++)
             {
                 int previousAverage = GetAverageBrightnessHorizontal(image, x - 5, middleY, 5);
                 int nextAverage = GetAverageBrightnessHorizontal(image, x, middleY, 5);
@@ -137,10 +137,10 @@ namespace PocketScout.Desktop
             }
 
             // Get top inner border
-            for (int y = topBorder + 20; y < image.Height - bottomBorder - 5; y++)
+            for (int y = topBorder + 5; y < image.Height - bottomBorder - 5; y++)
             {
-                int previousAverage = GetAverageBrightnessVertical(image, y - 5, middleX, 5);
-                int nextAverage = GetAverageBrightnessVertical(image, y, middleX, 5);
+                int previousAverage = GetAverageBrightnessVertical(image, y - 3, middleX, 3);
+                int nextAverage = GetAverageBrightnessVertical(image, y, middleX, 3);
 
                 int difference = Math.Abs(previousAverage - nextAverage);
 
