@@ -42,6 +42,10 @@ namespace PocketScout.Desktop
 
             ImageAnalyzer analyzer = new ImageAnalyzer();
 
+            // Get Card Brightness Map
+            int[,] brightnessMap = analyzer.GetBrightnessMap(cardImage);
+
+            // Reset zoom to 1.0 and update picture box size
             zoom = 1.0f;
             UpdatePictureBoxSize();
 
@@ -50,9 +54,10 @@ namespace PocketScout.Desktop
             lblResolution.Visible = true;
             lblResolution.Text = $"Resolution: {size.width}x{size.height}";
 
-            var border = analyzer.GetCardBorder(cardImage);
+            // Get outer border and inner border sizes
+            var border = analyzer.GetCardBorder(brightnessMap);
 
-            var innerBorder = analyzer.GetCardInnerBorder(cardImage,
+            var innerBorder = analyzer.GetCardInnerBorder(brightnessMap,
                 border.leftBorder,
                 border.rightBorder,
                 border.topBorder,
@@ -90,7 +95,7 @@ namespace PocketScout.Desktop
 
         private void pictureBoxCard_Click(object sender, EventArgs e)
         {
-
+            
         }
 
         // --- QOL ---

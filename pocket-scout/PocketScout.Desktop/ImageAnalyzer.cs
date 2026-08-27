@@ -16,13 +16,33 @@ namespace PocketScout.Desktop
             return (image.Width, image.Height);
         }
 
+        // Image Brightness Map
+        public int[,] GetBrightnessMap(Bitmap image)
+        {
+            int[,] brightnessMap = new int[image.Width, image.Height];
+            for (int y = 0; y < image.Height; y++)
+            {
+                for(int x = 0; x < image.Width; x++)
+                {
+                    Color pixel = image.GetPixel(x, y);
+                    int brightness = (pixel.R + pixel.G + pixel.B) / 3;
+                    brightnessMap[x, y] = brightness;
+                }
+            }
+
+            return (brightnessMap);
+        }
+
         // Card Outside Border
-        public (int leftBorder, int rightBorder, int topBorder, int bottomBorder) GetCardBorder(Bitmap image)
+        public (int leftBorder, int rightBorder, int topBorder, int bottomBorder) GetCardBorder(int[,] brightnessMap)
         {
             // Get to middle row of image (temporary)
 
-            int middleY = image.Height / 2;
-            int middleX = image.Width / 2;
+            int width = brightnessMap.GetLength(0);
+            int height = brightnessMap.GetLength(1);
+
+            int middleX = width / 2;
+            int middleY = height / 2;
 
             int leftBorder = 0;
             int rightBorder = 0;
@@ -30,12 +50,13 @@ namespace PocketScout.Desktop
             int bottomBorder = 0;
 
             int threshold = 140; // Adjust threshold base on card's background color
+            int windowSize = 5; // Number of pixels to average for brightness comparison
 
-            // Get left border
-            for (int x = 5; x < image.Width - 5; x++)
+            // Find left border
+            for (int x = windowSize; x < width - windowSize; x++)
             {
-                int previousAverage = GetAverageBrightnessHorizontal(image, x - 5, middleY, 5);
-                int nextAverage = GetAverageBrightnessHorizontal(image, x, middleY, 5);
+                int previousAverage = GetAverageBrightnessHorizontal(brightnessMap, x - windowSize, middleY, windowSize);
+                int nextAverage = GetAverageBrightnessHorizontal(brightnessMap, x, middleY, windowSize);
 
                 int difference = Math.Abs(previousAverage - nextAverage);
 
@@ -47,24 +68,24 @@ namespace PocketScout.Desktop
             }
 
             // Get right border
-            for (int x = image.Width - 6; x > 5; x--) {
-                int previousAverage = GetAverageBrightnessHorizontal(image, x, middleY, 5);
-                int nextAverage = GetAverageBrightnessHorizontal(image, x - 5, middleY, 5);
+            for (int x = width - windowSize; x > windowSize; x--) {
+                int previousAverage = GetAverageBrightnessHorizontal(brightnessMap, x, middleY, windowSize);
+                int nextAverage = GetAverageBrightnessHorizontal(brightnessMap, x - windowSize, middleY, windowSize);
 
                 int difference = Math.Abs(previousAverage - nextAverage);
 
                 if(difference > threshold)
                 {
-                    rightBorder = image.Width - x;
+                    rightBorder = width - x;
                     break;
                 }
             }
 
             // Get top border
-            for (int y = 5; y < image.Height - 5; y++)
+            for (int y = windowSize; y < height - windowSize; y++)
             {
-                int previousAverage = GetAverageBrightnessVertical(image, y - 5, middleX, 5);
-                int nextAverage = GetAverageBrightnessVertical(image, y, middleX, 5);
+                int previousAverage = GetAverageBrightnessVertical(brightnessMap, y - windowSize, middleX, windowSize);
+                int nextAverage = GetAverageBrightnessVertical(brightnessMap, y, middleX, windowSize);
 
                 int difference = Math.Abs(previousAverage - nextAverage);
 
@@ -77,16 +98,16 @@ namespace PocketScout.Desktop
             
 
             // Get bottom border
-            for (int y = image.Height - 6; y > 5; y--)
+            for (int y = height - windowSize; y > windowSize; y--)
             {
-                int previousAverage = GetAverageBrightnessVertical(image, y - 5, middleX, 5);
-                int nextAverage = GetAverageBrightnessVertical(image, y, middleX, 5);
+                int previousAverage = GetAverageBrightnessVertical(brightnessMap, y - windowSize, middleX, windowSize);
+                int nextAverage = GetAverageBrightnessVertical(brightnessMap, y, middleX, windowSize);
 
                 int difference = Math.Abs(previousAverage - nextAverage);
 
                 if (difference > threshold)
                 {
-                    bottomBorder = image.Height - y;
+                    bottomBorder = height - y;
                     break;
                 }
             }
@@ -94,10 +115,14 @@ namespace PocketScout.Desktop
             return (leftBorder, rightBorder, topBorder, bottomBorder);
         }
 
-        public (int leftInnerBorder, int rightInnerBorder, int topInnerBorder, int bottomInnerBorder) GetCardInnerBorder(Bitmap image, int leftBorder, int rightBorder, int topBorder, int bottomBorder)
+        // Get Card Inner Border
+        public (int leftInnerBorder, int rightInnerBorder, int topInnerBorder, int bottomInnerBorder) GetCardInnerBorder(int[,] brightnessMap, int leftBorder, int rightBorder, int topBorder, int bottomBorder)
         {
-            int middleX = image.Width / 2;
-            int middleY = image.Height / 2;
+            int width = brightnessMap.GetLength(0);
+            int height = brightnessMap.GetLength(1);
+
+            int middleX = width / 2;
+            int middleY = height / 2;
 
             int topInnerBorder = 0;
             int rightInnerBorder = 0;
@@ -105,12 +130,13 @@ namespace PocketScout.Desktop
             int bottomInnerBorder = 0;
 
             int threshold = 40;
+            int windowSize = 5;
 
             // Get left inner border
-            for (int x = leftBorder + 5; x < image.Width - rightBorder - 5; x++)
+            for (int x = leftBorder + windowSize; x < width - rightBorder - windowSize; x++)
             {
-                int previousAverage = GetAverageBrightnessHorizontal(image, x - 5, middleY, 5);
-                int nextAverage = GetAverageBrightnessHorizontal(image, x, middleY, 5);
+                int previousAverage = GetAverageBrightnessHorizontal(brightnessMap, x - windowSize, middleY, windowSize);
+                int nextAverage = GetAverageBrightnessHorizontal(brightnessMap, x, middleY, windowSize);
 
                 int difference = Math.Abs(previousAverage - nextAverage);
 
@@ -122,25 +148,25 @@ namespace PocketScout.Desktop
             }
 
             // Get right inner border
-            for (int x = image.Width - rightBorder - 20; x > leftBorder + 5; x--)
+            for (int x = width - rightBorder - 20; x > leftBorder + windowSize; x--)
             {
-                int previousAverage = GetAverageBrightnessHorizontal(image, x, middleY, 5);
-                int nextAverage = GetAverageBrightnessHorizontal(image, x - 5, middleY, 5);
+                int previousAverage = GetAverageBrightnessHorizontal(brightnessMap, x, middleY, windowSize);
+                int nextAverage = GetAverageBrightnessHorizontal(brightnessMap, x - windowSize, middleY, windowSize);
 
                 int difference = Math.Abs(previousAverage - nextAverage);
 
                 if (difference > threshold)
                 {
-                    rightInnerBorder = image.Width - x;
+                    rightInnerBorder = width - x;
                     break;
                 }
             }
 
             // Get top inner border
-            for (int y = topBorder + 5; y < image.Height - bottomBorder - 5; y++)
+            for (int y = topBorder + windowSize; y < height - bottomBorder - windowSize; y++)
             {
-                int previousAverage = GetAverageBrightnessVertical(image, y - 3, middleX, 3);
-                int nextAverage = GetAverageBrightnessVertical(image, y, middleX, 3);
+                int previousAverage = GetAverageBrightnessVertical(brightnessMap, y - windowSize, middleX, windowSize);
+                int nextAverage = GetAverageBrightnessVertical(brightnessMap, y, middleX, windowSize);
 
                 int difference = Math.Abs(previousAverage - nextAverage);
 
@@ -152,16 +178,16 @@ namespace PocketScout.Desktop
             }
 
             // Get bottom inner border
-            for (int y = image.Height - bottomBorder - 20; y > topBorder + 5 ; y--)
+            for (int y = height - bottomBorder - 20; y > topBorder + windowSize ; y--)
             {
-                int previousAverage = GetAverageBrightnessVertical(image, y - 5, middleX, 5);
-                int nextAverage = GetAverageBrightnessVertical(image, y, middleX, 5);
+                int previousAverage = GetAverageBrightnessVertical(brightnessMap, y - windowSize, middleX, windowSize);
+                int nextAverage = GetAverageBrightnessVertical(brightnessMap, y, middleX, windowSize);
 
                 int difference = Math.Abs(previousAverage - nextAverage);
 
                 if (difference > threshold)
                 {
-                    bottomInnerBorder = image.Height - y;
+                    bottomInnerBorder = height - y;
                     break;
                 }
             }
@@ -171,42 +197,31 @@ namespace PocketScout.Desktop
         }
 
         // Avg Brightness Horizontal Helper Method
-        private int GetAverageBrightnessHorizontal(Bitmap image, int startX, int fixedY, int amount)
+        private int GetAverageBrightnessHorizontal(int[,] brightnessMap, int startX, int fixedY, int amount)
         {
             int total = 0;
 
             for (int x = startX; x < startX + amount; x++){
 
-                Color pixel = image.GetPixel(x, fixedY);
-                total += (pixel.R + pixel.G + pixel.B) / 3;
+                total += brightnessMap[x, fixedY];
             }
 
             return total / amount;
         }
 
         // Avg Brightness Veritcal Helper Method
-        private int GetAverageBrightnessVertical(Bitmap image, int startY, int fixedX, int amount)
+        private int GetAverageBrightnessVertical(int[,] brightnessMap, int startY, int fixedX, int amount)
         {
             int total = 0;
 
             for(int y = startY; y < startY + amount; y++)
             {
-                Color pixel = image.GetPixel(fixedX, y);
-                total += (pixel.R + pixel.G + pixel.B) / 3;
+                total += brightnessMap[fixedX, y];
 
             }
             return total / amount;
         }
 
-
-        private int FindTopInnerBorderLinesAtX(Bitmap image, int x, int topBorder, int bottomBorder, int threshold)
-        {
-            for (int y = topBorder + 20; y < image.Height - bottomBorder - 5; y++)
-            {
-
-            }
-            return 0;
-        }
 
         // Draw Debug Border Lines
         public Bitmap DrawBorderLines(Bitmap image, int leftBorder, int rightBorder, int topBorder, int bottomBorder, int leftInnerBorder, int rightInnerBorder, int topInnerBorder, int bottomInnerBorder)
@@ -214,7 +229,6 @@ namespace PocketScout.Desktop
             Bitmap copy = new Bitmap(image);
 
             using (Graphics g = Graphics.FromImage(copy))
-            using (Pen pen = new Pen(Color.Red, 3))
             {
                 // Outer Borders
                 int leftX = leftBorder;
@@ -245,7 +259,6 @@ namespace PocketScout.Desktop
                     g.DrawLine(innerPen, 0, topInnerY, image.Width, topInnerY);
                     g.DrawLine(innerPen, 0, bottomInnerY, image.Width, bottomInnerY);
                 }
-                
 
             }
 
